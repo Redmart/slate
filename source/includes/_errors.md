@@ -1,22 +1,15 @@
 # Errors
 
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
-The Kittn API uses the following error codes:
-
+The Partner API uses the following error codes:
 
 Error Code | Meaning
 ---------- | -------
-400 | Bad Request -- Your request is invalid.
-401 | Unauthorized -- Your API key is wrong.
-403 | Forbidden -- The kitten requested is hidden for administrators only.
-404 | Not Found -- The specified kitten could not be found.
-405 | Method Not Allowed -- You tried to access a kitten with an invalid method.
-406 | Not Acceptable -- You requested a format that isn't json.
-410 | Gone -- The kitten requested has been removed from our servers.
-418 | I'm a teapot.
-429 | Too Many Requests -- You're requesting too many kittens! Slow down!
+400 | Bad Request -- Your request is semantically invalid, e.g. it contains a number where a string is expected or it's missing a mandatory parameter.
+401 | Unauthorized -- Your oauth2 access-token is absent, invalid or expired.
+403 | Forbidden -- Your oauth2 access-token is valid but its scope does not grant you access to this operation.
+404 | Not Found -- The specified resource could not be found.
+412 | Unprocessable Entity -- Your request is semantically valid but it cannot be processed, e.g. because its date parameter 'from' is greater than its 'till'.
+422 | Precondition Failed -- One or more conditions given in the request header fields evaluated to false when tested on the server, e.g. the if-match header of your update-stock request did not match the current available stock on RedMart side 
+429 | Too Many Requests -- You're triggering our rate limiter! Slow down!
 500 | Internal Server Error -- We had a problem with our server. Try again later.
 503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
