@@ -20,7 +20,7 @@ This is the official documentation of RedMart's Marketplace **Partner API**. Usi
 
 The API effort is still very much Work In Progress. Treat this documentation as a beta version likely to change in the near future.
 
-We provide language bindings in Shell and Scala. You can view code samples in the dark pane on the right, and you can switch the programming language with the tabs in the top right.
+We provide language bindings in Shell and Scala. You can view code samples in the dark pane on the right. Switch the programming language with the tabs at the top.
 
 # Registration
 
@@ -34,7 +34,7 @@ In a nutshell :
  4. Client Application uses the Access Token to call Partner API endpoints
  5. Once Client Application starts receiving [*401 Unauthorized*](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2) responses to its calls, it means the Access Token has expired. It then needs to request another Access Token (step 3) 
  
-<aside class="warning">The registration phase (step 1) won't be part of the first release of Partner API so it won't be available in partner-portal. Access is invitation only so contact RedMart directly to provide your Client Application name, we'll register it for you and forward your CLIENT_ID and CLIENT_SECRET.</aside>
+<aside class="warning">The registration phase in partner-portal (step 1) won't actually be part of the initial release and will be invite-only. Contact RedMart directly, provide your Client Application name and we'll register it for you. We'll then forward your CLIENT_ID and CLIENT_SECRET.</aside>
 
 # Request a Token
 
@@ -296,9 +296,9 @@ curl --include --insecure \
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[Page_Product_](#schemapage_product_)|
 
-## Get one Product by RPC
+## Get one Product
 
-RPC stands for _RedMart Product Code_
+Get one Product _by RPC_ (RPC stands for 'RedMart Product Code')
 
 <a id="opIdgetProducts-productId"></a>
 
@@ -363,7 +363,7 @@ curl --include --insecure \
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[Problem](#schemaproblem)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[Problem](#schemaproblem)|
 
-## Get all Stocks of a Product
+## Get all Stocks
 
 <a id="opIdgetProductsPickup-locationsStocks-productId-pickupLocationId"></a>
 
@@ -428,7 +428,7 @@ curl --include --insecure \
 |quantityScheduledForPickup|integer(int32)|true|none|Number of items that are scheduled for pickup in the next few days|
 |quantityAvailableForSale|integer(int32)|true|none|Number of items that can currently still be ordered by customers|
 
-## Get one Stock of a Product
+## Get one Stock
 
 <a id="opIdgetProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId"></a>
 
@@ -498,7 +498,7 @@ curl --include --insecure \
 |---|---|---|---|---|
 |200|ETag|string||Identifier that describes the latest state of this resource|
 
-## Update one Stock of a Product
+## Update one Stock
 
 <a id="opIdpatchProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId-If-Match-body"></a>
 
