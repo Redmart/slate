@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;scala&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,9 +212,7 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="scala">scala</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -222,31 +220,79 @@
         <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
-            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+            <a href="#registration" class="toc-h1 toc-link" data-title="registration">Registration</a>
           </li>
           <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#request-a-token" class="toc-h1 toc-link" data-title="request-a-token">Request a Token</a>
+          </li>
+          <li>
+            <a href="#pickup-locations" class="toc-h1 toc-link" data-title="pickup-locations">Pickup Locations</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#get-all-pickup-locations" class="toc-h2 toc-link" data-title="get-all-pickup-locations">Get all Pickup Locations</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
-                  </li>
-                  <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#get-one-pickup-location" class="toc-h2 toc-link" data-title="get-one-pickup-location">Get one Pickup Location</a>
                   </li>
               </ul>
           </li>
           <li>
-            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+            <a href="#mp-partner-api-service-products" class="toc-h1 toc-link" data-title="products">Products</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-products" class="toc-h2 toc-link" data-title="get-all-products">Get all Products</a>
+                  </li>
+                  <li>
+                    <a href="#get-one-product" class="toc-h2 toc-link" data-title="get-one-product">Get one Product</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-stocks" class="toc-h2 toc-link" data-title="get-all-stocks">Get all Stocks</a>
+                  </li>
+                  <li>
+                    <a href="#get-one-stock" class="toc-h2 toc-link" data-title="get-one-stock">Get one Stock</a>
+                  </li>
+                  <li>
+                    <a href="#update-one-stock" class="toc-h2 toc-link" data-title="update-one-stock">Update one Stock</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#schemas" class="toc-h1 toc-link" data-title="em-schemas-em"><em>Schemas</em></a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#tocSpickuplocation" class="toc-h2 toc-link" data-title="pickuplocation">PickupLocation</a>
+                  </li>
+                  <li>
+                    <a href="#tocSstockupdate" class="toc-h2 toc-link" data-title="stockupdate">StockUpdate</a>
+                  </li>
+                  <li>
+                    <a href="#tocSproblem" class="toc-h2 toc-link" data-title="problem">Problem</a>
+                  </li>
+                  <li>
+                    <a href="#tocSpickuplocationref" class="toc-h2 toc-link" data-title="pickuplocationref">PickupLocationRef</a>
+                  </li>
+                  <li>
+                    <a href="#tocSproduct" class="toc-h2 toc-link" data-title="product">Product</a>
+                  </li>
+                  <li>
+                    <a href="#tocSstock" class="toc-h2 toc-link" data-title="stock">Stock</a>
+                  </li>
+                  <li>
+                    <a href="#tocSpage_pickuplocation_" class="toc-h2 toc-link" data-title="page_pickuplocation_">Page_PickupLocation_</a>
+                  </li>
+                  <li>
+                    <a href="#tocSpage_product_" class="toc-h2 toc-link" data-title="page_product_">Page_Product_</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="errors">Errors</a>
           </li>
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
             <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -254,188 +300,1282 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>This is the official documentation of RedMart&#39;s Marketplace <strong>Partner API</strong>. Using this private API, you&#39;ll be able to manage your inventory, products, orders, pickups and more! </p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>The API effort is still very much Work In Progress. Treat this documentation as a beta version likely to change in the near future.</p>
 
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
+<p>We provide language bindings in Shell and Scala. You can view code samples in the dark pane on the right. Switch the programming language with the tabs at the top.</p>
+<h1 id='registration'>Registration</h1>
+<p>The Partner API uses the <a href="https://tools.ietf.org/html/rfc6749">OAuth2 authorization framework</a> and supports the <a href="https://tools.ietf.org/html/rfc6749#section-4.4">Client Credentials</a> flow.</p>
+
+<p>In a nutshell : </p>
+
+<ol>
+<li>Register your Client Application in <a href="https://partners.redmart.com">partner-portal</a></li>
+<li>Save (securely) your CLIENT_ID and CLIENT_SECRET into your Client Application&#39;s database</li>
+<li>Client Application requests an Access Token from Partner API using its CLIENT_ID and CLIENT SECRET</li>
+<li>Client Application uses the Access Token to call Partner API endpoints</li>
+<li>Once Client Application starts receiving <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2"><em>401 Unauthorized</em></a> responses to its calls, it means the Access Token has expired. It then needs to request another Access Token (step 3) </li>
+</ol>
+
+<aside class="warning">The registration phase in partner-portal (step 1) won't actually be part of the initial release and will be invite-only. Contact RedMart directly, provide your Client Application name and we'll register it for you. We'll then forward your CLIENT_ID and CLIENT_SECRET.</aside>
+<h1 id='request-a-token'>Request a Token</h1>
+<p><a id="request-a-token"></a></p>
+
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>To request a token, use this code:</p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure --request POST <span class="se">\</span>
+     --header <span class="s2">"content-type: application/x-www-form-urlencoded"</span> <span class="se">\</span>
+     --data <span class="s2">"client_id={MY_CLIENT_ID}&amp;grant_type=client_credentials&amp;client_secret={MY_CLIENT_SECRET}"</span> <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/oauth2/token"</span>
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<blockquote>
+<p>Make sure to replace <code>{MY_CLIENT_ID}</code> and <code>{MY_CLIENT_SECRET}</code> with the actual values provided during Registration.</p>
+</blockquote>
+
+<p>The Client Application makes a request to the <code>/oauth2/token</code> endpoint by sending the following parameters in the &quot;application/x-www-form-urlencoded&quot; format</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>true</td>
+<td>The Client ID provided during Registration</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td>true</td>
+<td>The Client Secret provided during Registration</td>
+</tr>
+<tr>
+<td>grant_type</td>
+<td>true</td>
+<td>The value MUST be set to &quot;client_credentials&quot;</td>
+</tr>
+<tr>
+<td>scope</td>
+<td>false</td>
+<td>Optional string describing the scope of the access request</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+   </span><span class="s2">"token_type"</span><span class="p">:</span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"access_token"</span><span class="p">:</span><span class="s2">"{access-token}"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="mi">7200</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">seconds</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h1 id='pickup-locations'>Pickup Locations</h1>
+<p>A Product can be picked from within one Pickup Location.
+A Marketplace Seller can have several Pickup Locations.</p>
+
+<aside class="warning">
+To perform all <b>Pickup Locations</b> operations, you must always send your oauth2 access-token (see the <a href="#request-a-token">Request a Token</a> section).
+Look at the 'Authorization' header in the code samples.
+</aside>
+<h2 id='get-all-pickup-locations'>Get all Pickup Locations</h2>
+<p><a id="get-all-pickup-locations"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure <span class="se">\</span>
+     -X GET <span class="s2">"https://{HOSTNAME}/v1/pickup-locations?page=1&amp;pageSize=50"</span> <span class="se">\</span>
+     -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: Bearer {access-token}'</span>
+
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
+</span></code></pre>
+<p><code>GET /v1/pickup-locations</code></p>
+
+<p><em>Querying and filtering pickup locations</em></p>
+
+<h3 id="getpickup-locations-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Required</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
+<td>page</td>
+<td>query</td>
 <td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>1</td>
+<td>The page number, must be &gt;= 1</td>
 </tr>
 <tr>
-<td>available</td>
+<td>pageSize</td>
+<td>query</td>
+<td>false</td>
+<td>50</td>
+<td>Number of items on one page, must be &gt;= 1 and &lt;= 100</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"addressLine1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1 Main Street"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Singapore"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABC Merchant"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Singapore"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23789"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"addressLine2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#02-15"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='get-one-pickup-location'>Get one Pickup Location</h2>
+<p><a id="get-one-pickup-location"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure <span class="se">\</span>
+     -X GET <span class="s2">"https://{HOSTNAME}/v1/pickup-locations/{pickupLocationId}"</span> <span class="se">\</span>
+     -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: Bearer {access-token}'</span>
+
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
+</span></code></pre>
+<p><code>GET /v1/pickup-locations/{pickupLocationId}</code></p>
+
+<p><em>Querying the details of a specific pickup location</em></p>
+
+<h3 id="getpickup-locations-pickuplocationid-parameters">Path Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pickupLocationId</td>
+<td>path</td>
 <td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>The unique Identifier of the pickup-location, in the response example it&#39;s the value 23789</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"addressLine1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1 Main Street"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Singapore"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABC Merchant"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Singapore"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23789"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"addressLine2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#02-15"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>404 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The requested resource could not be found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="getpickup-locations-pickuplocationid-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>OK</td>
+<td><a href="#schemapickuplocation">PickupLocation</a></td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Not Found</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+</tbody></table>
+
+<h1 id="mp-partner-api-service-products">Products</h1>
+
+<p>The Products API allows you to retrieve Products and update their inventory stocks.</p>
+
+<aside class="warning">
+To perform all <b>Products</b> operations, you must always send your oauth2 access-token (see the <a href="#request-a-token">Request a Token</a> section).
+Look at the 'Authorization' header in the code samples.
 </aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='get-all-products'>Get all Products</h2>
+<p><a id="opIdgetProducts-page-pageSize-pickupLocations"></a></p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Code samples</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure <span class="se">\</span>
+     -X GET <span class="s2">"https://{HOSTNAME}/v1/products?page=1&amp;pageSize=50&amp;pickupLocations=23789,23790"</span> <span class="se">\</span>
+     -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
+</span>
+</code></pre>
+<p><code>GET /v1/products</code></p>
+
+<p><em>Query and filter products</em></p>
+
+<h3 id="getproducts-page-pagesize-pickuplocations-parameters">Query Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>page</td>
+<td>query</td>
+<td>integer</td>
+<td>false</td>
+<td>Page to start returning results from, must be &gt;= 1</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>integer</td>
+<td>false</td>
+<td>Number of items on one page, must be &gt;= 1 and &lt;= 100</td>
+</tr>
+<tr>
+<td>pickupLocations</td>
+<td>query</td>
+<td>array[string]</td>
+<td>false</td>
+<td>The unique ids of pickup locations you want to retrieve the products from (comma-separated)</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>200 Response</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"111122223333"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chocolate Cereals"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">100150</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23789"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc-merch-specific-choc-cereals-code"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"444455556666"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apple Cereals"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">100151</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23789"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc-merch-specific-choc-cereals-code"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"444455556666"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fresh Orange Juice"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">120350</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23790"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc-merch-specific-orange-juice-code"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+<h3 id="getproducts-page-pagesize-pickuplocations-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>OK</td>
+<td><a href="#schemapage_product_">Page_Product_</a></td>
+</tr>
+</tbody></table>
+<h2 id='get-one-product'>Get one Product</h2>
+<p>Get one Product <em>by RPC</em> (RPC stands for &#39;RedMart Product Code&#39;)</p>
+
+<p><a id="opIdgetProducts-productId"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure <span class="se">\</span>
+     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}"</span> <span class="se">\</span>
+     -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: Bearer {access-token}'</span>
+
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
+</span>
+</code></pre>
+<p><code>GET /v1/products/{productId}</code></p>
+
+<p><em>Querying the details of a specific product by RPC</em></p>
+
+<h3 id="getproducts-productid-parameters">Path Parameters</h3>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>productId</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>the RPC of the Product (so the RedMart-specific code, <em>not</em> the merchant-specific code)</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"111122223333"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chocolate Cereals"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">100150</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23789"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc-merch-specific-choc-cereals-code"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>404 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The requested resource could not be found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="getproducts-productid-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>OK</td>
+<td><a href="#schemaproduct">Product</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Bad Request</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Not Found</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+</tbody></table>
+<h2 id='get-all-stocks'>Get all Stocks</h2>
+<p><a id="opIdgetProductsPickup-locationsStocks-productId-pickupLocationId"></a></p>
+
+<p>For now, RedMart supports only <em>one</em> Stock per Product.</p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure <span class="se">\</span>
+     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks"</span> <span class="se">\</span>
+     -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: Bearer {access-token}'</span>
+
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
+</span>
+</code></pre>
+<p><code>GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks</code></p>
+
+<p><em>Querying all in-store stock levels for a specific product in a specific pickup location</em></p>
+
+<h3 id="getproductspickup-locationsstocks-productid-pickuplocationid-parameters">Path Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>productId</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>the RPC of the Product (so the RedMart-specific code, <em>not</em> the merchant-specific code)</td>
+</tr>
+<tr>
+<td>pickupLocationId</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>The unique id of the pickup location where the product is stored</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1970-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<h3 id="getproductspickup-locationsstocks-productid-pickuplocationid-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>OK</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Bad Request</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Not Found</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="getproductspickup-locationsstocks-productid-pickuplocationid-responseschema">200 Response Schema</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td></td>
+<td>[<a href="#schemastock">Stock</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>availableForPickupFrom</td>
+<td>string(date-time)</td>
+<td>true</td>
+<td>none</td>
+<td>Indicates from which point in time the items are available for pickup (currently unused and hardcoded to epoch 0)</td>
+</tr>
+<tr>
+<td>quantityAtPickupLocation</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>Number of items available in the pickup location</td>
+</tr>
+<tr>
+<td>quantityScheduledForPickup</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>Number of items that are scheduled for pickup in the next few days</td>
+</tr>
+<tr>
+<td>quantityAvailableForSale</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>Number of items that can currently still be ordered by customers</td>
+</tr>
+</tbody></table>
+<h2 id='get-one-stock'>Get one Stock</h2>
+<p><a id="opIdgetProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId"></a></p>
+
+<p>For now, RedMart supports only <em>one</em> Stock per Product.</p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure <span class="se">\</span>
+     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z"</span> <span class="se">\</span>
+     -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: Bearer {access-token}'</span>
+
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
+</span>
+</code></pre>
+<p><code>GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z</code></p>
+
+<p><em>Querying in-store stock levels for a product in a specific pickup location</em></p>
+
+<h3 id="getproductspickup-locationsstocks1970-01-01t00:00:00z-productid-pickuplocationid-parameters">Path Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>productId</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>the RPC of the Product (so the RedMart-specific code, <em>not</em> the merchant-specific code)</td>
+</tr>
+<tr>
+<td>pickupLocationId</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>The unique id of the pickup location where the product is stored</td>
+</tr>
+<tr>
+<td>stockAvailableForPickupFrom</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>Hardcoded to epoch 0, i.e. &#39;1970-01-01T00:00:00Z&#39;, to mean the stock is a &quot;present&quot; Stock (as opposed to a future/planned Stock)</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1970-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>404 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The requested resource could not be found"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="getproductspickup-locationsstocks1970-01-01t00:00:00z-productid-pickuplocationid-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>OK</td>
+<td><a href="#schemastock">Stock</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Bad Request</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Not Found</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+</tbody></table>
+<h3 id='response-headers'>Response Headers</h3>
+<p><a id="get-one-stock-of-a-product-response-headers"></a></p>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Header</th>
+<th>Type</th>
+<th>Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>ETag</td>
+<td>string</td>
+<td></td>
+<td>Identifier that describes the latest state of this resource</td>
+</tr>
+</tbody></table>
+<h2 id='update-one-stock'>Update one Stock</h2>
+<p><a id="opIdpatchProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId-If-Match-body"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
+<span class="c"># Prod hostname : partner-api.redmart.com</span>
+curl --include --insecure <span class="se">\</span>
+     --request PATCH <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z"</span> <span class="se">\</span>
+     -H <span class="s1">'Content-Type: application/merge-patch+json'</span> <span class="se">\</span>
+     -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     -H <span class="s1">'If-Match: 10'</span> <span class="se">\</span>
+     -H <span class="s1">'Authorization: Bearer {access-token}'</span> <span class="se">\</span>
+     --data <span class="s1">'{"quantityAtPickupLocation": 20}'</span>
+</code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
+</span>
+</code></pre>
+<p><code>PATCH /products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z</code></p>
+
+<p><em>Updating in-store stock levels for an RPC in a specific pickup location</em></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="patchproductspickup-locationsstocks1970-01-01t00:00:00z-productid-pickuplocationid-if-match-body-parameters">Path and Header Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>productId</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+</tr>
+<tr>
+<td>pickupLocationId</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+</tr>
+<tr>
+<td>If-Match</td>
+<td>header</td>
+<td>string</td>
+<td>true</td>
+<td>The update request will only be processed if this value matches the latest <code>ETag</code> value of the resource (see <a href="#get-one-stock-of-a-product-response-headers">Response Headers</a> section of the <em>Get one Stock of a Product</em> endpoint)</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemastockupdate">StockUpdate</a></td>
+<td>false</td>
+<td>StockUpdate</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1970-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>412 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"the If-Match condition evaluated to false"</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="patchproductspickup-locationsstocks1970-01-01t00:00:00z-productid-pickuplocationid-if-match-body-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>OK</td>
+<td><a href="#schemastock">Stock</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Bad Request</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Not Found</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+<tr>
+<td>412</td>
+<td><a href="https://tools.ietf.org/html/rfc7232#section-4.2">Precondition Failed</a></td>
+<td>Precondition Failed</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+</tbody></table>
+<h3 id='response-headers-2'>Response Headers</h3>
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Header</th>
+<th>Type</th>
+<th>Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>ETag</td>
+<td>string</td>
+<td></td>
+<td>Identifier that describes the latest state of this resource</td>
+</tr>
+</tbody></table>
+<h1 id='schemas'><em>Schemas</em></h1>
+<p>All schemas referenced in the APIs documented above </p>
+
+<h2 id="tocSpickuplocation">PickupLocation</h2>
+
+<p><a id="schemapickuplocation"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"addressLine1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"addressLine2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>PickupLocation</em></p>
+<h3 id='properties'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>addressLine1</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>city</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>country</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>addressLine2</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSstockupdate">StockUpdate</h2>
+
+<p><a id="schemastockupdate"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>StockUpdate</em></p>
+<h3 id='properties-2'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>quantityAtPickupLocation</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>Number of items available in the pickup location</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSproblem">Problem</h2>
+
+<p><a id="schemaproblem"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>Problem</em></p>
+<h3 id='properties-3'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSpickuplocationref">PickupLocationRef</h2>
+
+<p><a id="schemapickuplocationref"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>PickupLocationRef</em></p>
+<h3 id='properties-4'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSproduct">Product</h2>
+
+<p><a id="schemaproduct"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"addressLine1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"addressLine2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>Product</em></p>
+<h3 id='properties-5'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>barcodes</td>
+<td>[string]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>rpc</td>
+<td>integer(int64)</td>
+<td>true</td>
+<td>none</td>
+<td>The RPC (RedMart Product Code) of an item</td>
+</tr>
+<tr>
+<td>pickupLocations</td>
+<td>[<a href="#schemapickuplocation">PickupLocation</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>productCode</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>Custom product code as defined by the seller</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSstock">Stock</h2>
+
+<p><a id="schemastock"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-03T04:25:53Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>Stock</em></p>
+<h3 id='properties-6'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>availableForPickupFrom</td>
+<td>string(date-time)</td>
+<td>true</td>
+<td>none</td>
+<td>Indicates from which point in time the items are available for pickup (currently unused)</td>
+</tr>
+<tr>
+<td>quantityAtPickupLocation</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>Number of items available in the pickup location</td>
+</tr>
+<tr>
+<td>quantityScheduledForPickup</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>Number of items that are scheduled for pickup in the next few days</td>
+</tr>
+<tr>
+<td>quantityAvailableForSale</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>Number of items that can currently still be ordered by customers</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSpage_pickuplocation_">Page_PickupLocation_</h2>
+
+<p><a id="schemapage_pickuplocation_"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"addressLine1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"addressLine2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>Page«PickupLocation»</em></p>
+<h3 id='properties-7'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>items</td>
+<td>[<a href="#schemapickuplocation">PickupLocation</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>total</td>
+<td>integer(int32)</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSpage_product_">Page_Product_</h2>
+
+<p><a id="schemapage_product_"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"string"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"addressLine1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"addressLine2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>Page«Product»</em></p>
+<h3 id='properties-8'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>integer(int32)</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>items</td>
+<td>[<a href="#schemaproduct">Product</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>total</td>
+<td>integer(int32)</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>The Partner API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -445,39 +1585,31 @@ Remember — a happy kitten is an authenticated kitten!
 </thead><tbody>
 <tr>
 <td>400</td>
-<td>Bad Request -- Your request sucks.</td>
+<td>Bad Request -- Your request is semantically invalid, e.g. it contains a number where a string is expected or it&#39;s missing a mandatory parameter.</td>
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
+<td>Unauthorized -- Your oauth2 access-token is absent, invalid or expired.</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td>Forbidden -- Your oauth2 access-token is valid but its scope does not grant you access to this operation.</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
+<td>Not Found -- The specified resource could not be found.</td>
 </tr>
 <tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+<td>412</td>
+<td>Unprocessable Entity -- Your request is semantically valid but it cannot be processed, e.g. because its date parameter &#39;from&#39; is greater than its &#39;till&#39;.</td>
 </tr>
 <tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
+<td>422</td>
+<td>Precondition Failed -- One or more conditions given in the request header fields evaluated to false when tested on the server, e.g. the if-match header of your update-stock request did not match the current available stock on RedMart side</td>
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td>Too Many Requests -- You&#39;re triggering our rate limiter! Slow down!</td>
 </tr>
 <tr>
 <td>500</td>
@@ -493,9 +1625,7 @@ Remember — a happy kitten is an authenticated kitten!
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="scala">scala</a>
           </div>
       </div>
     </div>
