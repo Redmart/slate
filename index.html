@@ -221,6 +221,11 @@
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#changelog" class="toc-h2 toc-link" data-title="changelog">Changelog</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#registration" class="toc-h1 toc-link" data-title="registration">Registration</a>
@@ -249,13 +254,13 @@
                     <a href="#get-one-product" class="toc-h2 toc-link" data-title="get-one-product">Get one Product</a>
                   </li>
                   <li>
-                    <a href="#get-all-stocks" class="toc-h2 toc-link" data-title="get-all-stocks">Get all Stocks</a>
+                    <a href="#get-all-stock-lots" class="toc-h2 toc-link" data-title="get-all-stock-lots">Get all Stock Lots</a>
                   </li>
                   <li>
-                    <a href="#get-one-stock" class="toc-h2 toc-link" data-title="get-one-stock">Get one Stock</a>
+                    <a href="#get-one-stock-lot" class="toc-h2 toc-link" data-title="get-one-stock-lot">Get one Stock Lot</a>
                   </li>
                   <li>
-                    <a href="#update-one-stock" class="toc-h2 toc-link" data-title="update-one-stock">Update one Stock</a>
+                    <a href="#update-one-stock-lot" class="toc-h2 toc-link" data-title="update-one-stock-lot">Update one Stock Lot</a>
                   </li>
               </ul>
           </li>
@@ -278,7 +283,7 @@
                     <a href="#tocSproduct" class="toc-h2 toc-link" data-title="product">Product</a>
                   </li>
                   <li>
-                    <a href="#tocSstock" class="toc-h2 toc-link" data-title="stock">Stock</a>
+                    <a href="#tocSstock" class="toc-h2 toc-link" data-title="stock-lot">Stock Lot</a>
                   </li>
                   <li>
                     <a href="#tocSpage_pickuplocation_" class="toc-h2 toc-link" data-title="page_pickuplocation_">Page_PickupLocation_</a>
@@ -293,6 +298,7 @@
           </li>
       </div>
         <ul class="toc-footer">
+            <li>RedMart Partner API <i>version 1.0.1</i></li>
             <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -305,6 +311,32 @@
 <p>The API effort is still very much Work In Progress. Treat this documentation as a beta version likely to change in the near future.</p>
 
 <p>We provide language bindings in Shell and Scala. You can view code samples in the dark pane on the right. Switch the programming language with the tabs at the top.</p>
+<h2 id='changelog'>Changelog</h2>
+<p>We will list any changes to the current version of the API here.</p>
+
+<table><thead>
+<tr>
+<th>Date</th>
+<th>Details of changes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>2018-07-06</td>
+<td>Pre-release of RedMart Partner API Document Version 1</td>
+</tr>
+<tr>
+<td>2018-07-13</td>
+<td>Renames <em>Stocks</em> as <strong>Stock Lots</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>Identifies each Stock Lot by their <strong>new <code>id</code> field</strong> (rather than the previously used <code>availableForPickupFrom</code>)</td>
+</tr>
+<tr>
+<td></td>
+<td>Adds the error response code <strong>409 Conflict</strong> in <a href="#update-one-stock-lot">Update one Stock Lot</a></td>
+</tr>
+</tbody></table>
 <h1 id='registration'>Registration</h1>
 <p>The Partner API uses the <a href="https://tools.ietf.org/html/rfc6749">OAuth2 authorization framework</a> and supports the <a href="https://tools.ietf.org/html/rfc6749#section-4.4">Client Credentials</a> flow.</p>
 
@@ -754,10 +786,10 @@ curl --include --insecure <span class="se">\</span>
 <td><a href="#schemaproblem">Problem</a></td>
 </tr>
 </tbody></table>
-<h2 id='get-all-stocks'>Get all Stocks</h2>
+<h2 id='get-all-stock-lots'>Get all Stock Lots</h2>
 <p><a id="opIdgetProductsPickup-locationsStocks-productId-pickupLocationId"></a></p>
 
-<p>For now, RedMart supports only <em>one</em> Stock per Product.</p>
+<p>With this endpoint, retrieve all Stock Lots of a given product. For now, RedMart supports only <em>one</em> Stock Lot per product.</p>
 
 <blockquote>
 <p>Code samples</p>
@@ -772,9 +804,9 @@ curl --include --insecure <span class="se">\</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
 </span>
 </code></pre>
-<p><code>GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks</code></p>
+<p><code>GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots</code></p>
 
-<p><em>Querying all in-store stock levels for a specific product in a specific pickup location</em></p>
+<p><em>Querying all in-store stock lots levels for a specific product in a specific pickup location</em></p>
 
 <h3 id="getproductspickup-locationsstocks-productid-pickuplocationid-parameters">Path Parameters</h3>
 
@@ -808,7 +840,7 @@ curl --include --insecure <span class="se">\</span>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1970-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
     </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
@@ -892,10 +924,10 @@ curl --include --insecure <span class="se">\</span>
 <td>Number of items that can currently still be ordered by customers</td>
 </tr>
 </tbody></table>
-<h2 id='get-one-stock'>Get one Stock</h2>
+<h2 id='get-one-stock-lot'>Get one Stock Lot</h2>
 <p><a id="opIdgetProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId"></a></p>
 
-<p>For now, RedMart supports only <em>one</em> Stock per Product.</p>
+<p>For now, RedMart supports only <em>one</em> Stock Lot per Product.</p>
 
 <blockquote>
 <p>Code samples</p>
@@ -903,14 +935,14 @@ curl --include --insecure <span class="se">\</span>
 <pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
 <span class="c"># Prod hostname : partner-api.redmart.com</span>
 curl --include --insecure <span class="se">\</span>
-     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z"</span> <span class="se">\</span>
+     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0"</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
 </code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
 </span>
 </code></pre>
-<p><code>GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z</code></p>
+<p><code>GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0</code></p>
 
 <p><em>Querying in-store stock levels for a product in a specific pickup location</em></p>
 
@@ -940,11 +972,11 @@ curl --include --insecure <span class="se">\</span>
 <td>The unique id of the pickup location where the product is stored</td>
 </tr>
 <tr>
-<td>stockAvailableForPickupFrom</td>
+<td>id</td>
 <td>path</td>
 <td>string</td>
 <td>true</td>
-<td>Hardcoded to epoch 0, i.e. &#39;1970-01-01T00:00:00Z&#39;, to mean the stock is a &quot;present&quot; Stock (as opposed to a future/planned Stock)</td>
+<td>Identifier of the requested Stock Lot. For now always hardcoded to &quot;0&quot; (please note the <code>String</code> type, do <strong>not</strong> always expect it to be a number !)</td>
 </tr>
 </tbody></table>
 
@@ -952,7 +984,7 @@ curl --include --insecure <span class="se">\</span>
 <p>200 Response</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1970-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
@@ -1014,7 +1046,7 @@ curl --include --insecure <span class="se">\</span>
 <td>Identifier that describes the latest state of this resource</td>
 </tr>
 </tbody></table>
-<h2 id='update-one-stock'>Update one Stock</h2>
+<h2 id='update-one-stock-lot'>Update one Stock Lot</h2>
 <p><a id="opIdpatchProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId-If-Match-body"></a></p>
 
 <blockquote>
@@ -1023,7 +1055,7 @@ curl --include --insecure <span class="se">\</span>
 <pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
 <span class="c"># Prod hostname : partner-api.redmart.com</span>
 curl --include --insecure <span class="se">\</span>
-     --request PATCH <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z"</span> <span class="se">\</span>
+     --request PATCH <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0"</span> <span class="se">\</span>
      -H <span class="s1">'Content-Type: application/merge-patch+json'</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'If-Match: 10'</span> <span class="se">\</span>
@@ -1032,9 +1064,9 @@ curl --include --insecure <span class="se">\</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
 </span>
 </code></pre>
-<p><code>PATCH /products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z</code></p>
+<p><code>PATCH /v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0</code></p>
 
-<p><em>Updating in-store stock levels for an RPC in a specific pickup location</em></p>
+<p><em>Updating a specific in-store stock lot&#39;s level for an RPC in a specific pickup location</em></p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -1073,7 +1105,7 @@ curl --include --insecure <span class="se">\</span>
 <td>header</td>
 <td>string</td>
 <td>true</td>
-<td>The update request will only be processed if this value matches the latest <code>ETag</code> value of the resource (see <a href="#get-one-stock-of-a-product-response-headers">Response Headers</a> section of the <em>Get one Stock of a Product</em> endpoint)</td>
+<td>The update request will only be processed if this value matches the latest <code>ETag</code> value of the resource (see <a href="#get-one-stock-of-a-product-response-headers">Response Headers</a> section of the <a href="#get-one-stock-lot">Get one Stock Lot</a> endpoint)</td>
 </tr>
 <tr>
 <td>body</td>
@@ -1088,10 +1120,17 @@ curl --include --insecure <span class="se">\</span>
 <p>200 Response</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1970-01-01T00:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>409 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"the request conflicted with the current state of the resource"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
@@ -1099,7 +1138,7 @@ curl --include --insecure <span class="se">\</span>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"the If-Match condition evaluated to false"</span><span class="w">
- </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id="patchproductspickup-locationsstocks1970-01-01t00:00:00z-productid-pickuplocationid-if-match-body-responses">Responses</h3>
 
@@ -1130,9 +1169,15 @@ curl --include --insecure <span class="se">\</span>
 <td><a href="#schemaproblem">Problem</a></td>
 </tr>
 <tr>
+<td>409</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.8">Conflict</a></td>
+<td>The <code>quantityAtPickupLocation</code> value in your request is strictly lower than the <code>quantityScheduledForPickup</code> value. Set <code>quantityAtPickupLocation</code> to be at least equal to <code>quantityScheduledForPickup</code> before resubmitting.</td>
+<td><a href="#schemaproblem">Problem</a></td>
+</tr>
+<tr>
 <td>412</td>
 <td><a href="https://tools.ietf.org/html/rfc7232#section-4.2">Precondition Failed</a></td>
-<td>Precondition Failed</td>
+<td>The Stock Lot level has changed since the last time you read it, which may result in an inconsistent state. Re-read the Stock Lot, fetch its <code>Etag</code> and update your <code>If-Match</code> header before resubmitting.</td>
 <td><a href="#schemaproblem">Problem</a></td>
 </tr>
 </tbody></table>
@@ -1389,11 +1434,11 @@ curl --include --insecure <span class="se">\</span>
 </tr>
 </tbody></table>
 
-<h2 id="tocSstock">Stock</h2>
+<h2 id="tocSstock">Stock Lot</h2>
 
 <p><a id="schemastock"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"availableForPickupFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-03T04:25:53Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityScheduledForPickup"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityAvailableForSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
@@ -1412,11 +1457,11 @@ curl --include --insecure <span class="se">\</span>
 </tr>
 </thead><tbody>
 <tr>
-<td>availableForPickupFrom</td>
-<td>string(date-time)</td>
+<td>id</td>
+<td>string</td>
 <td>true</td>
 <td>none</td>
-<td>Indicates from which point in time the items are available for pickup (currently unused)</td>
+<td>Identifier of the Stock Lot. For now always hardcoded to &quot;0&quot;</td>
 </tr>
 <tr>
 <td>quantityAtPickupLocation</td>
@@ -1600,12 +1645,16 @@ curl --include --insecure <span class="se">\</span>
 <td>Not Found -- The specified resource could not be found.</td>
 </tr>
 <tr>
+<td>409</td>
+<td>Conflict -- Your request conflicts with the current state of the resource, e.g. you&#39;re setting a product stock&#39;s <code>quantityAtPickupLocation</code> to a value lower than its current <code>quantityScheduledForPickup</code> resulting in its <code>quantityAvailableForSale</code> being negative.</td>
+</tr>
+<tr>
 <td>412</td>
 <td>Unprocessable Entity -- Your request is semantically valid but it cannot be processed, e.g. because its date parameter &#39;from&#39; is greater than its &#39;till&#39;.</td>
 </tr>
 <tr>
 <td>422</td>
-<td>Precondition Failed -- One or more conditions given in the request header fields evaluated to false when tested on the server, e.g. the if-match header of your update-stock request did not match the current available stock on RedMart side</td>
+<td>Precondition Failed -- One or more conditions given in the request header fields evaluated to false when tested on the server, e.g. the <code>if-match</code> header of your update-stock-lot request did not match the current stock on RedMart side.</td>
 </tr>
 <tr>
 <td>429</td>
