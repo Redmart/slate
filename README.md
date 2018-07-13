@@ -1,10 +1,10 @@
 # RedMart Partner API Documentation using Slate
 
-<p align="center">Marketplace Sellers (or Partners) at RedMart can integrate their platform with our own using this documentation.</p>
+Marketplace Sellers (or Partners) at RedMart can integrate their platform with our own using this documentation.
 
 <p align="center"><img src="https://raw.githubusercontent.com/Redmart/partner-api-doc/master/source/images/redmart.partner.api.screenshot.png" width=700 alt="Screenshot of Documentation created with Slate"></p>
 
-<p align="center"><em>Check it out at <a href="https://redmart.github.io/partner-api-doc">redmart.github.io/partner-api-doc</a>.</em></p>
+<p align="center"><em>Check it out at <a href="https://redmart.github.io/partner-api-doc">redmart.github.io/partner-api-doc</a></em></p>
 
 ## Viewing the Documentation locally
 
@@ -27,8 +27,6 @@ bundle exec middleman server
 ```
 You can now see the docs at http://localhost:4567
 
-Now that Slate is all set up on your machine, you'll probably want to learn more about [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax), or [how to publish your docs](https://github.com/lord/slate/wiki/Deploying-Slate).
-
 ## Updating the Documentation
 
 ### Prerequisites
@@ -41,12 +39,12 @@ Now that Slate is all set up on your machine, you'll probably want to learn more
 ```shell
 sudo npm install -g widdershins
 ``` 
-2. Get the `mp-partner-api-service-vX.json` Swagger file from [Confluence](https://redmart.atlassian.net/wiki/spaces/marketplace/pages/407470169/2018Q1+-+Stock+Management) ([July-2018 version gist](https://gist.githubusercontent.com/JanGe/43b539746d1ee57fe4e92c0c358b37fa/raw/d92c053f6304e85ef63e6b950e3e46df7c576b33/mp-partner-api-service-v1.json))
+2. Get the `mp-partner-api-service-vX.json` Swagger file from [Confluence](https://redmart.atlassian.net/wiki/spaces/marketplace/pages/407470169/2018Q1+-+Stock+Management) (last [known version](https://gist.githubusercontent.com/JanGe/43b539746d1ee57fe4e92c0c358b37fa/raw/d92c053f6304e85ef63e6b950e3e46df7c576b33/mp-partner-api-service-v1.json) as of July 2018)
 3. Generate a Slate markdown out of the Swagger file
 ```shell
 widdershins mp-partner-api-service-v1.json --language_tabs "shell:Shell" --language_tabs "java:Java" -o mp-partner-api-slate.md
 ```
-4. Use the generated `mp-partner-api-slate.md` _as a scaffolding only_ to update this repo's `index.html.md` (in the `source` folder). For now, the Swagger does not translate directly to the markdown, which needs a fair amount of manual editing. See [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax) for more syntax details.
+4. Use the generated `mp-partner-api-slate.md` _as a scaffolding only_ to update this repo's `source/index.html.md`. For now, the Swagger does not translate directly to the markdown, which needs a fair amount of manual editing. See [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax) for more syntax details.
 5. As you edit, you can view your changes locally in a browser, see [previous section](#viewing-the-documentation-locally)
 6. Once your changes are finished, create a PR (or push directly to master)
 7. run this repo's deploy script to make your changes visible at [redmart.github.io/partner-api-doc](https://redmart.github.io/partner-api-doc)
