@@ -6,6 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - scala
 
 toc_footers:
+  - RedMart Partner API <i>version 1.0.1</i>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -21,6 +22,16 @@ This is the official documentation of RedMart's Marketplace **Partner API**. Usi
 The API effort is still very much Work In Progress. Treat this documentation as a beta version likely to change in the near future.
 
 We provide language bindings in Shell and Scala. You can view code samples in the dark pane on the right. Switch the programming language with the tabs at the top.
+
+## Changelog
+We will list any changes to the current version of the API here.
+
+| Date        | Details of changes                                         |
+| ----------- | ---------------------------------------------------------- |
+| 2018-07-06  | Pre-release of RedMart Partner API Document Version 1 |
+| 2018-07-13  | Renames _Stocks_ as **Stock Lots** |
+|             | Identifies each Stock Lot by their **new `id` field** (rather than the previously used `availableForPickupFrom`) |
+|             | Adds the error response code **409 Conflict** in [Update one Stock Lot](#update-one-stock-lot) |
 
 # Registration
 
@@ -363,11 +374,11 @@ curl --include --insecure \
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[Problem](#schemaproblem)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[Problem](#schemaproblem)|
 
-## Get all Stocks
+## Get all Stock Lots
 
 <a id="opIdgetProductsPickup-locationsStocks-productId-pickupLocationId"></a>
 
-For now, RedMart supports only _one_ Stock per Product.
+With this endpoint, retrieve all Stock Lots of a given product. For now, RedMart supports only _one_ Stock Lot per product.
 
 > Code samples
 
@@ -386,9 +397,9 @@ curl --include --insecure \
 
 ```
 
-`GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks`
+`GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots`
 
-*Querying all in-store stock levels for a specific product in a specific pickup location*
+*Querying all in-store stock lots levels for a specific product in a specific pickup location*
 
 <h3 id="getproductspickup-locationsstocks-productid-pickuplocationid-parameters">Path Parameters</h3>
 
@@ -402,7 +413,7 @@ curl --include --insecure \
 ```json
 [
   {
-    "availableForPickupFrom": "1970-01-01T00:00:00Z",
+    "id": "0",
     "quantityAtPickupLocation": 10,
     "quantityScheduledForPickup": 2,
     "quantityAvailableForSale": 8
@@ -428,11 +439,11 @@ curl --include --insecure \
 |quantityScheduledForPickup|integer(int32)|true|none|Number of items that are scheduled for pickup in the next few days|
 |quantityAvailableForSale|integer(int32)|true|none|Number of items that can currently still be ordered by customers|
 
-## Get one Stock
+## Get one Stock Lot
 
 <a id="opIdgetProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId"></a>
 
-For now, RedMart supports only _one_ Stock per Product.
+For now, RedMart supports only _one_ Stock Lot per Product.
 
 > Code samples
 
@@ -440,7 +451,7 @@ For now, RedMart supports only _one_ Stock per Product.
 # Test hostname : partner-api.alpha.redmart.com
 # Prod hostname : partner-api.redmart.com
 curl --include --insecure \
-     -X GET "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z" \
+     -X GET "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0" \
      -H 'Accept: application/json' \
      -H 'Authorization: Bearer {access-token}'
 
@@ -451,7 +462,7 @@ curl --include --insecure \
 
 ```
 
-`GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z`
+`GET /v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0`
 
 *Querying in-store stock levels for a product in a specific pickup location*
 
@@ -461,13 +472,13 @@ curl --include --insecure \
 |---|---|---|---|---|
 |productId|path|string|true|the RPC of the Product (so the RedMart-specific code, _not_ the merchant-specific code)|
 |pickupLocationId|path|string|true|The unique id of the pickup location where the product is stored|
-|stockAvailableForPickupFrom|path|string|true|Hardcoded to epoch 0, i.e. '1970-01-01T00:00:00Z', to mean the stock is a "present" Stock (as opposed to a future/planned Stock)|
+|id|path|string|true|Identifier of the requested Stock Lot. For now always hardcoded to "0" (please note the `String` type, do **not** always expect it to be a number !)|
 
 > 200 Response
 
 ```json
 {
-  "availableForPickupFrom": "1970-01-01T00:00:00Z",
+  "id": "0",
   "quantityAtPickupLocation": 10,
   "quantityScheduledForPickup": 2,
   "quantityAvailableForSale": 8
@@ -498,7 +509,7 @@ curl --include --insecure \
 |---|---|---|---|---|
 |200|ETag|string||Identifier that describes the latest state of this resource|
 
-## Update one Stock
+## Update one Stock Lot
 
 <a id="opIdpatchProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId-If-Match-body"></a>
 
@@ -508,7 +519,7 @@ curl --include --insecure \
 # Test hostname : partner-api.alpha.redmart.com
 # Prod hostname : partner-api.redmart.com
 curl --include --insecure \
-     --request PATCH "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z" \
+     --request PATCH "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0" \
      -H 'Content-Type: application/merge-patch+json' \
      -H 'Accept: application/json' \
      -H 'If-Match: 10' \
@@ -521,9 +532,9 @@ curl --include --insecure \
 
 ```
 
-`PATCH /products/{productId}/pickup-locations/{pickupLocationId}/stocks/1970-01-01T00:00:00Z`
+`PATCH /v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0`
 
-*Updating in-store stock levels for an RPC in a specific pickup location*
+*Updating a specific in-store stock lot's level for an RPC in a specific pickup location*
 
 > Body parameter
 
@@ -539,17 +550,25 @@ curl --include --insecure \
 |---|---|---|---|---|
 |productId|path|string|true|none|
 |pickupLocationId|path|string|true|none|
-|If-Match|header|string|true|The update request will only be processed if this value matches the latest `ETag` value of the resource (see <a href="#get-one-stock-of-a-product-response-headers">Response Headers</a> section of the _Get one Stock of a Product_ endpoint)|
+|If-Match|header|string|true|The update request will only be processed if this value matches the latest `ETag` value of the resource (see <a href="#get-one-stock-of-a-product-response-headers">Response Headers</a> section of the [Get one Stock Lot](#get-one-stock-lot) endpoint)|
 |body|body|[StockUpdate](#schemastockupdate)|false|StockUpdate|
 
 > 200 Response
 
 ```json
 {
-  "availableForPickupFrom": "1970-01-01T00:00:00Z",
+  "id": "0",
   "quantityAtPickupLocation": 20,
   "quantityScheduledForPickup": 2,
   "quantityAvailableForSale": 18
+}
+```
+
+> 409 Response
+
+```json
+{
+  "title": "the request conflicted with the current state of the resource"
 }
 ```
 
@@ -558,7 +577,7 @@ curl --include --insecure \
 ```json
 {
   "title": "the If-Match condition evaluated to false"
- }
+}
 ```
 
 
@@ -569,7 +588,8 @@ curl --include --insecure \
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[Stock](#schemastock)|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[Problem](#schemaproblem)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[Problem](#schemaproblem)|
-|412|[Precondition Failed](https://tools.ietf.org/html/rfc7232#section-4.2)|Precondition Failed|[Problem](#schemaproblem)|
+|409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|The `quantityAtPickupLocation` value in your request is strictly lower than the `quantityScheduledForPickup` value. Set `quantityAtPickupLocation` to be at least equal to `quantityScheduledForPickup` before resubmitting.|[Problem](#schemaproblem)|
+|412|[Precondition Failed](https://tools.ietf.org/html/rfc7232#section-4.2)|The Stock Lot level has changed since the last time you read it, which may result in an inconsistent state. Re-read the Stock Lot, fetch its `Etag` and update your `If-Match` header before resubmitting.|[Problem](#schemaproblem)|
 
 ### Response Headers
 
@@ -708,13 +728,13 @@ All schemas referenced in the APIs documented above
 |pickupLocations|[[PickupLocation](#schemapickuplocation)]|true|none|none|
 |productCode|string|true|none|Custom product code as defined by the seller|
 
-<h2 id="tocSstock">Stock</h2>
+<h2 id="tocSstock">Stock Lot</h2>
 
 <a id="schemastock"></a>
 
 ```json
 {
-  "availableForPickupFrom": "2018-07-03T04:25:53Z",
+  "id": "0",
   "quantityAtPickupLocation": 0,
   "quantityScheduledForPickup": 0,
   "quantityAvailableForSale": 0
@@ -728,7 +748,7 @@ All schemas referenced in the APIs documented above
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|availableForPickupFrom|string(date-time)|true|none|Indicates from which point in time the items are available for pickup (currently unused)|
+|id|string|true|none|Identifier of the Stock Lot. For now always hardcoded to "0"|
 |quantityAtPickupLocation|integer(int32)|true|none|Number of items available in the pickup location|
 |quantityScheduledForPickup|integer(int32)|true|none|Number of items that are scheduled for pickup in the next few days|
 |quantityAvailableForSale|integer(int32)|true|none|Number of items that can currently still be ordered by customers|
