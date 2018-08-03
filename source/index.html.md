@@ -105,7 +105,7 @@ scope | false | A space-separated list of [scopes](#scopes), e.g. `read:product 
 
 ## Scopes
 
-To call any endpoint of this API, your access token needs to have access to the scope that this specific endpoint requires. As a best practice, you should *always* only request the smallest possible set of scopes for your application to work. This ensures the smallest possible impact in case anything goes wrong.
+To call any endpoint of this API, your access token needs to have access to the scope that this specific endpoint requires. As a best practice, you should *always* only request the smallest possible set of scopes for your application to work. This ensures the smallest possible impact in case anything goes wrong (see also [Principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege)).
 
 | Scope                | Scope Description |
 | -------------------- | ----------------- |
