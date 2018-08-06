@@ -91,7 +91,7 @@ Parameter | Required | Description
 client_id | true | The Client ID provided during Registration
 client_secret | true | The Client Secret provided during Registration 
 grant_type | true | The value MUST be set to "client_credentials"
-scope | false | A space-separated list of [scopes](#scopes), e.g. `read:product read:pickup-location`
+scope | true | A space-separated list of [scopes](#scopes), e.g. `read:product read:pickup-location`
 
 > [200 OK](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1) response:
 
