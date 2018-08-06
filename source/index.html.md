@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - scala
 
 toc_footers:
-  - RedMart Partner API <i>version 1.0.1</i>
+  - RedMart Partner API <i>version 0.3.0</i>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -32,6 +32,20 @@ We will list any changes to the current version of the API here.
 | 2018-07-13  | Renames _Stocks_ as **Stock Lots** |
 |             | Identifies each Stock Lot by their **new `id` field** (rather than the previously used `availableForPickupFrom`) |
 |             | Adds the error response code **409 Conflict** in [Update one Stock Lot](#update-one-stock-lot) |
+| 2018-08-02  | Add OAuth 2 [scopes](#scopes) to all endpoints to manage access rights of applications |
+|             | List all available [Environments](#environments) |
+
+## Environments
+
+We currently provide the Partner API in two environments, **Sandbox** and **Production**.
+
+ - **Sandbox** should be used for development and testing of your integration with our systems. Changes done here will not have an impact on what customers can order via RedMart. This environment might not at all times be stable and working.
+ - **Production** should only be used once you are done with development and have tested your integration with our systems extensively. All changes done here will have a direct impact on what is available for customers to order via RedMart.
+
+| Environment | Hostname |
+| ----------- | -------- |
+| Sandbox     | partners-api.alpha.redmart.com |
+| Production  | partners-api.redmart.com |
 
 # Registration
 
@@ -54,19 +68,21 @@ In a nutshell :
 > To request a token, use this code:
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure --request POST \
-     --header "content-type: application/x-www-form-urlencoded" \
-     --data "client_id={MY_CLIENT_ID}&grant_type=client_credentials&client_secret={MY_CLIENT_SECRET}" \
-     "https://{HOSTNAME}/oauth2/token"
+
+curl --include -X POST \
+     "https://{HOSTNAME}/oauth2/token" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     --data "grant_type=client_credentials" \
+     --data "client_id={MY_CLIENT_ID}" \
+     --data "client_secret={MY_CLIENT_SECRET}" \
+     --data "scope={scopes}"
 ```
 
 ```scala
 // TODO
 ```
 
-> Make sure to replace `{MY_CLIENT_ID}` and `{MY_CLIENT_SECRET}` with the actual values provided during Registration.
+> Make sure to replace `{MY_CLIENT_ID}` and `{MY_CLIENT_SECRET}` with the actual values provided during Registration and `{scopes}` with a space-separated list of [scopes](#scopes).
 
 The Client Application makes a request to the `/oauth2/token` endpoint by sending the following parameters in the "application/x-www-form-urlencoded" format
 
@@ -75,7 +91,7 @@ Parameter | Required | Description
 client_id | true | The Client ID provided during Registration
 client_secret | true | The Client Secret provided during Registration 
 grant_type | true | The value MUST be set to "client_credentials"
-scope | false | Optional string describing the scope of the access request
+scope | false | A space-separated list of [scopes](#scopes), e.g. `read:product read:pickup-location`
 
 > [200 OK](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1) response:
 
@@ -86,6 +102,17 @@ scope | false | Optional string describing the scope of the access request
    "expires_in":7200 // this is in seconds
 }
 ```
+
+## Scopes
+
+To call any endpoint of this API, your access token needs to have access to the scope that this specific endpoint requires. As a best practice, you should *always* only request the smallest possible set of scopes for your application to work. This ensures the smallest possible impact in case anything goes wrong (see also [Principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege)).
+
+| Scope                | Scope Description |
+| -------------------- | ----------------- |
+| read:pickup-location | Grants access to view details of a pickup location |
+| read:product         | Grants access to view details of a product |
+| read:stock-lot       | Grants access to view stock lots of a product |
+| write:stock-lot      | Grants access to update stock lots of a product |
 
 # Pickup Locations
 
@@ -104,10 +131,9 @@ Look at the 'Authorization' header in the code samples.
 > Code samples
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure \
-     -X GET "https://{HOSTNAME}/v1/pickup-locations?page=1&pageSize=50" \
+
+curl --include -X GET \
+     "https://{HOSTNAME}/v1/pickup-locations?page=1&pageSize=50" \
      -H 'Accept: application/json' \
      -H 'Authorization: Bearer {access-token}'
 
@@ -149,6 +175,17 @@ curl --include --insecure \
 }
 ```
 
+<h3 id="getpickup-locations-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[Page_PickupLocation_](#schemapage_pickuplocation_)|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:pickup-location )
+</aside>
+
 ## Get one Pickup Location
 
 <a id="get-one-pickup-location"></a>
@@ -156,10 +193,9 @@ curl --include --insecure \
 > Code samples
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure \
-     -X GET "https://{HOSTNAME}/v1/pickup-locations/{pickupLocationId}" \
+
+curl --include -X GET \
+     "https://{HOSTNAME}/v1/pickup-locations/{pickupLocationId}" \
      -H 'Accept: application/json' \
      -H 'Authorization: Bearer {access-token}'
 
@@ -208,6 +244,11 @@ curl --include --insecure \
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[PickupLocation](#schemapickuplocation)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[Problem](#schemaproblem)|
 
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:pickup-location )
+</aside>
+
 <h1 id="mp-partner-api-service-products">Products</h1>
 
 The Products API allows you to retrieve Products and update their inventory stocks.
@@ -224,10 +265,9 @@ Look at the 'Authorization' header in the code samples.
 > Code samples
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure \
-     -X GET "https://{HOSTNAME}/v1/products?page=1&pageSize=50&pickupLocations=23789,23790" \
+
+curl --include -X GET \
+     "https://{HOSTNAME}/v1/products?page=1&pageSize=50&pickupLocationIds=23789,23790" \
      -H 'Accept: application/json' \
      -H 'Authorization: Bearer {access-token}'
 
@@ -261,6 +301,9 @@ curl --include --insecure \
       "barcodes": [
         "111122223333"
       ],
+      "status": {
+        "type": "Enabled"
+      },
       "title": "Chocolate Cereals",
       "rpc": 100150,
       "pickupLocations": [
@@ -274,6 +317,9 @@ curl --include --insecure \
       "barcodes": [
         "444455556666"
       ],
+      "status": {
+        "type": "Disabled"
+      },
       "title": "Apple Cereals",
       "rpc": 100151,
       "pickupLocations": [
@@ -287,6 +333,9 @@ curl --include --insecure \
       "barcodes": [
         "444455556666"
       ],
+      "status": {
+        "type": "Discontinued"
+      },
       "title": "Fresh Orange Juice",
       "rpc": 120350,
       "pickupLocations": [
@@ -307,6 +356,11 @@ curl --include --insecure \
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[Page_Product_](#schemapage_product_)|
 
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:product )
+</aside>
+
 ## Get one Product
 
 Get one Product _by RPC_ (RPC stands for 'RedMart Product Code')
@@ -316,10 +370,9 @@ Get one Product _by RPC_ (RPC stands for 'RedMart Product Code')
 > Code samples
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure \
-     -X GET "https://{HOSTNAME}/v1/products/{productId}" \
+
+curl --include -X GET \
+     "https://{HOSTNAME}/v1/products/{productId}" \
      -H 'Accept: application/json' \
      -H 'Authorization: Bearer {access-token}'
 
@@ -347,6 +400,9 @@ curl --include --insecure \
   "barcodes": [
     "111122223333"
   ],
+  "status": {
+    "type": "Enabled"
+  },
   "title": "Chocolate Cereals",
   "rpc": 100150,
   "pickupLocations": [
@@ -374,6 +430,11 @@ curl --include --insecure \
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[Problem](#schemaproblem)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[Problem](#schemaproblem)|
 
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:product )
+</aside>
+
 ## Get all Stock Lots
 
 <a id="opIdgetProductsPickup-locationsStocks-productId-pickupLocationId"></a>
@@ -383,10 +444,9 @@ With this endpoint, retrieve all Stock Lots of a given product. For now, RedMart
 > Code samples
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure \
-     -X GET "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks" \
+
+curl --include -X GET \
+     "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots" \
      -H 'Accept: application/json' \
      -H 'Authorization: Bearer {access-token}'
 
@@ -433,11 +493,16 @@ curl --include --insecure \
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-||[[Stock](#schemastock)]|false|none|none|
-|availableForPickupFrom|string(date-time)|true|none|Indicates from which point in time the items are available for pickup (currently unused and hardcoded to epoch 0)|
+||[[StockLot](#schemastocklot)]|false|none|none|
+|id|string|true|none|Identifier of the requested Stock Lot. For now always hardcoded to "0" (please note the `String` type, do **not** always expect it to be a number !)|
 |quantityAtPickupLocation|integer(int32)|true|none|Number of items available in the pickup location|
 |quantityScheduledForPickup|integer(int32)|true|none|Number of items that are scheduled for pickup in the next few days|
 |quantityAvailableForSale|integer(int32)|true|none|Number of items that can currently still be ordered by customers|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:stock-lot )
+</aside>
 
 ## Get one Stock Lot
 
@@ -448,10 +513,9 @@ For now, RedMart supports only _one_ Stock Lot per Product.
 > Code samples
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure \
-     -X GET "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0" \
+
+curl --include -X GET \
+     "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0" \
      -H 'Accept: application/json' \
      -H 'Authorization: Bearer {access-token}'
 
@@ -497,7 +561,7 @@ curl --include --insecure \
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[Stock](#schemastock)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[StockLot](#schemastocklot)|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[Problem](#schemaproblem)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[Problem](#schemaproblem)|
 
@@ -509,6 +573,11 @@ curl --include --insecure \
 |---|---|---|---|---|
 |200|ETag|string||Identifier that describes the latest state of this resource|
 
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:stock-lot )
+</aside>
+
 ## Update one Stock Lot
 
 <a id="opIdpatchProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId-If-Match-body"></a>
@@ -516,13 +585,12 @@ curl --include --insecure \
 > Code samples
 
 ```shell
-# Test hostname : partner-api.alpha.redmart.com
-# Prod hostname : partner-api.redmart.com
-curl --include --insecure \
-     --request PATCH "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0" \
+
+curl --include -X PATCH \
+     "https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0" \
      -H 'Content-Type: application/merge-patch+json' \
      -H 'Accept: application/json' \
-     -H 'If-Match: 10' \
+     -H 'If-Match: "10"' \
      -H 'Authorization: Bearer {access-token}' \
      --data '{"quantityAtPickupLocation": 20}'
 ```
@@ -548,10 +616,11 @@ curl --include --insecure \
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|productId|path|string|true|none|
-|pickupLocationId|path|string|true|none|
+|productId|path|string|true|the RPC of the Product (so the RedMart-specific code, _not_ the merchant-specific code)|
+|pickupLocationId|path|string|true|The unique id of the pickup location where the product is stored|
+|id|path|string|true|Identifier of the requested Stock Lot. For now always hardcoded to "0" (please note the `String` type, do **not** always expect it to be a number !)|
 |If-Match|header|string|true|The update request will only be processed if this value matches the latest `ETag` value of the resource (see <a href="#get-one-stock-of-a-product-response-headers">Response Headers</a> section of the [Get one Stock Lot](#get-one-stock-lot) endpoint)|
-|body|body|[StockUpdate](#schemastockupdate)|false|StockUpdate|
+|body|body|[StockLotUpdate](#schemastocklotupdate)|true|StockLotUpdate|
 
 > 200 Response
 
@@ -585,7 +654,7 @@ curl --include --insecure \
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[Stock](#schemastock)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[StockLot](#schemastocklot)|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[Problem](#schemaproblem)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|[Problem](#schemaproblem)|
 |409|[Conflict](https://tools.ietf.org/html/rfc7231#section-6.5.8)|The `quantityAtPickupLocation` value in your request is strictly lower than the `quantityScheduledForPickup` value. Set `quantityAtPickupLocation` to be at least equal to `quantityScheduledForPickup` before resubmitting.|[Problem](#schemaproblem)|
@@ -596,6 +665,11 @@ curl --include --insecure \
 |Status|Header|Type|Format|Description|
 |---|---|---|---|---|
 |200|ETag|string||Identifier that describes the latest state of this resource|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: write:stock-lot )
+</aside>
 
 # _Schemas_
 
@@ -632,9 +706,9 @@ All schemas referenced in the APIs documented above
 |id|string|true|none|none|
 |addressLine2|string|true|none|none|
 
-<h2 id="tocSstockupdate">StockUpdate</h2>
+<h2 id="tocSstocklotupdate">StockLotUpdate</h2>
 
-<a id="schemastockupdate"></a>
+<a id="schemastocklotupdate"></a>
 
 ```json
 {
@@ -643,7 +717,7 @@ All schemas referenced in the APIs documented above
 
 ```
 
-*StockUpdate*
+*StockLotUpdate*
 
 ### Properties
 
@@ -670,9 +744,9 @@ All schemas referenced in the APIs documented above
 |---|---|---|---|---|
 |title|string|true|none|none|
 
-<h2 id="tocSpickuplocationref">PickupLocationRef</h2>
+<h2 id="tocSpickuplocationid">PickupLocationId</h2>
 
-<a id="schemapickuplocationref"></a>
+<a id="schemapickuplocationid"></a>
 
 ```json
 {
@@ -681,7 +755,7 @@ All schemas referenced in the APIs documented above
 
 ```
 
-*PickupLocationRef*
+*PickupLocationId*
 
 ### Properties
 
@@ -698,17 +772,14 @@ All schemas referenced in the APIs documented above
   "barcodes": [
     "string"
   ],
+  "status": {
+    "type": "Enabled"
+  },
   "title": "string",
   "rpc": 0,
   "pickupLocations": [
     {
-      "addressLine1": "string",
-      "city": "string",
-      "name": "string",
-      "country": "string",
-      "postalCode": "string",
-      "id": "string",
-      "addressLine2": "string"
+      "id": "string"
     }
   ],
   "productCode": "string"
@@ -723,14 +794,42 @@ All schemas referenced in the APIs documented above
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |barcodes|[string]|true|none|none|
+|status|[Status](#schemastatus)|true|none|none|
 |title|string|true|none|none|
 |rpc|integer(int64)|true|none|The RPC (RedMart Product Code) of an item|
-|pickupLocations|[[PickupLocation](#schemapickuplocation)]|true|none|none|
+|pickupLocations|[[PickupLocationId](#schemapickuplocationid)]|true|none|none|
 |productCode|string|true|none|Custom product code as defined by the seller|
 
-<h2 id="tocSstock">Stock Lot</h2>
+<h2 id="tocSstatus">Status</h2>
 
-<a id="schemastock"></a>
+<a id="schemastatus"></a>
+
+```json
+{
+  "type": "Disabled"
+}
+
+```
+
+*Status*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|type|string|true|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|type|Disabled|
+|type|Discontinued|
+|type|Enabled|
+
+<h2 id="tocSstocklot">Stock Lot</h2>
+
+<a id="schemastocklot"></a>
 
 ```json
 {
@@ -742,7 +841,7 @@ All schemas referenced in the APIs documented above
 
 ```
 
-*Stock*
+*StockLot*
 
 ### Properties
 
@@ -801,6 +900,9 @@ All schemas referenced in the APIs documented above
       "barcodes": [
         "string"
       ],
+      "status": {
+        "type": "Enabled"
+      },
       "title": "string",
       "rpc": 0,
       "pickupLocations": [
