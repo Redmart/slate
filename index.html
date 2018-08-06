@@ -225,6 +225,9 @@
                   <li>
                     <a href="#changelog" class="toc-h2 toc-link" data-title="changelog">Changelog</a>
                   </li>
+                  <li>
+                    <a href="#environments" class="toc-h2 toc-link" data-title="environments">Environments</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -232,6 +235,11 @@
           </li>
           <li>
             <a href="#request-a-token" class="toc-h1 toc-link" data-title="request-a-token">Request a Token</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#scopes" class="toc-h2 toc-link" data-title="scopes">Scopes</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#pickup-locations" class="toc-h1 toc-link" data-title="pickup-locations">Pickup Locations</a>
@@ -271,19 +279,22 @@
                     <a href="#tocSpickuplocation" class="toc-h2 toc-link" data-title="pickuplocation">PickupLocation</a>
                   </li>
                   <li>
-                    <a href="#tocSstockupdate" class="toc-h2 toc-link" data-title="stockupdate">StockUpdate</a>
+                    <a href="#tocSstocklotupdate" class="toc-h2 toc-link" data-title="stocklotupdate">StockLotUpdate</a>
                   </li>
                   <li>
                     <a href="#tocSproblem" class="toc-h2 toc-link" data-title="problem">Problem</a>
                   </li>
                   <li>
-                    <a href="#tocSpickuplocationref" class="toc-h2 toc-link" data-title="pickuplocationref">PickupLocationRef</a>
+                    <a href="#tocSpickuplocationid" class="toc-h2 toc-link" data-title="pickuplocationid">PickupLocationId</a>
                   </li>
                   <li>
                     <a href="#tocSproduct" class="toc-h2 toc-link" data-title="product">Product</a>
                   </li>
                   <li>
-                    <a href="#tocSstock" class="toc-h2 toc-link" data-title="stock-lot">Stock Lot</a>
+                    <a href="#tocSstatus" class="toc-h2 toc-link" data-title="status">Status</a>
+                  </li>
+                  <li>
+                    <a href="#tocSstocklot" class="toc-h2 toc-link" data-title="stock-lot">Stock Lot</a>
                   </li>
                   <li>
                     <a href="#tocSpage_pickuplocation_" class="toc-h2 toc-link" data-title="page_pickuplocation_">Page_PickupLocation_</a>
@@ -298,7 +309,7 @@
           </li>
       </div>
         <ul class="toc-footer">
-            <li>RedMart Partner API <i>version 1.0.1</i></li>
+            <li>RedMart Partner API <i>version 0.3.0</i></li>
             <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -336,6 +347,37 @@
 <td></td>
 <td>Adds the error response code <strong>409 Conflict</strong> in <a href="#update-one-stock-lot">Update one Stock Lot</a></td>
 </tr>
+<tr>
+<td>2018-08-02</td>
+<td>Add OAuth 2 <a href="#scopes">scopes</a> to all endpoints to manage access rights of applications</td>
+</tr>
+<tr>
+<td></td>
+<td>List all available <a href="#environments">Environments</a></td>
+</tr>
+</tbody></table>
+<h2 id='environments'>Environments</h2>
+<p>We currently provide the Partner API in two environments, <strong>Sandbox</strong> and <strong>Production</strong>.</p>
+
+<ul>
+<li><strong>Sandbox</strong> should be used for development and testing of your integration with our systems. Changes done here will not have an impact on what customers can order via RedMart. This environment might not at all times be stable and working.</li>
+<li><strong>Production</strong> should only be used once you are done with development and have tested your integration with our systems extensively. All changes done here will have a direct impact on what is available for customers to order via RedMart.</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Environment</th>
+<th>Hostname</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Sandbox</td>
+<td>partners-api.alpha.redmart.com</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>partners-api.redmart.com</td>
+</tr>
 </tbody></table>
 <h1 id='registration'>Registration</h1>
 <p>The Partner API uses the <a href="https://tools.ietf.org/html/rfc6749">OAuth2 authorization framework</a> and supports the <a href="https://tools.ietf.org/html/rfc6749#section-4.4">Client Credentials</a> flow.</p>
@@ -357,16 +399,18 @@
 <blockquote>
 <p>To request a token, use this code:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure --request POST <span class="se">\</span>
-     --header <span class="s2">"content-type: application/x-www-form-urlencoded"</span> <span class="se">\</span>
-     --data <span class="s2">"client_id={MY_CLIENT_ID}&amp;grant_type=client_credentials&amp;client_secret={MY_CLIENT_SECRET}"</span> <span class="se">\</span>
-     <span class="s2">"https://{HOSTNAME}/oauth2/token"</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X POST <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/oauth2/token"</span> <span class="se">\</span>
+     -H <span class="s2">"Content-Type: application/x-www-form-urlencoded"</span> <span class="se">\</span>
+     --data <span class="s2">"grant_type=client_credentials"</span> <span class="se">\</span>
+     --data <span class="s2">"client_id={MY_CLIENT_ID}"</span> <span class="se">\</span>
+     --data <span class="s2">"client_secret={MY_CLIENT_SECRET}"</span> <span class="se">\</span>
+     --data <span class="s2">"scope={scopes}"</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
 </span></code></pre>
 <blockquote>
-<p>Make sure to replace <code>{MY_CLIENT_ID}</code> and <code>{MY_CLIENT_SECRET}</code> with the actual values provided during Registration.</p>
+<p>Make sure to replace <code>{MY_CLIENT_ID}</code> and <code>{MY_CLIENT_SECRET}</code> with the actual values provided during Registration and <code>{scopes}</code> with a space-separated list of <a href="#scopes">scopes</a>.</p>
 </blockquote>
 
 <p>The Client Application makes a request to the <code>/oauth2/token</code> endpoint by sending the following parameters in the &quot;application/x-www-form-urlencoded&quot; format</p>
@@ -396,7 +440,7 @@ curl --include --insecure --request POST <span class="se">\</span>
 <tr>
 <td>scope</td>
 <td>false</td>
-<td>Optional string describing the scope of the access request</td>
+<td>A space-separated list of <a href="#scopes">scopes</a>, e.g. <code>read:product read:pickup-location</code></td>
 </tr>
 </tbody></table>
 
@@ -408,7 +452,33 @@ curl --include --insecure --request POST <span class="se">\</span>
    </span><span class="s2">"access_token"</span><span class="p">:</span><span class="s2">"{access-token}"</span><span class="p">,</span><span class="w">
    </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="mi">7200</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">seconds</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='pickup-locations'>Pickup Locations</h1>
+</span></code></pre><h2 id='scopes'>Scopes</h2>
+<p>To call any endpoint of this API, your access token needs to have access to the scope that this specific endpoint requires. As a best practice, you should <em>always</em> only request the smallest possible set of scopes for your application to work. This ensures the smallest possible impact in case anything goes wrong (see also <a href="https://en.wikipedia.org/wiki/Principle_of_least_privilege">Principle of least privilege</a>).</p>
+
+<table><thead>
+<tr>
+<th>Scope</th>
+<th>Scope Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>read:pickup-location</td>
+<td>Grants access to view details of a pickup location</td>
+</tr>
+<tr>
+<td>read:product</td>
+<td>Grants access to view details of a product</td>
+</tr>
+<tr>
+<td>read:stock-lot</td>
+<td>Grants access to view stock lots of a product</td>
+</tr>
+<tr>
+<td>write:stock-lot</td>
+<td>Grants access to update stock lots of a product</td>
+</tr>
+</tbody></table>
+<h1 id='pickup-locations'>Pickup Locations</h1>
 <p>A Product can be picked from within one Pickup Location.
 A Marketplace Seller can have several Pickup Locations.</p>
 
@@ -422,10 +492,9 @@ Look at the 'Authorization' header in the code samples.
 <blockquote>
 <p>Code samples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure <span class="se">\</span>
-     -X GET <span class="s2">"https://{HOSTNAME}/v1/pickup-locations?page=1&amp;pageSize=50"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X GET <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/v1/pickup-locations?page=1&amp;pageSize=50"</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
@@ -481,16 +550,38 @@ curl --include --insecure <span class="se">\</span>
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='get-one-pickup-location'>Get one Pickup Location</h2>
+</span></code></pre>
+<h3 id="getpickup-locations-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>OK</td>
+<td><a href="#schemapage_pickuplocation_">Page_PickupLocation_</a></td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:pickup-location )
+</aside>
+<h2 id='get-one-pickup-location'>Get one Pickup Location</h2>
 <p><a id="get-one-pickup-location"></a></p>
 
 <blockquote>
 <p>Code samples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure <span class="se">\</span>
-     -X GET <span class="s2">"https://{HOSTNAME}/v1/pickup-locations/{pickupLocationId}"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X GET <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/v1/pickup-locations/{pickupLocationId}"</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
@@ -562,6 +653,11 @@ curl --include --insecure <span class="se">\</span>
 </tr>
 </tbody></table>
 
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:pickup-location )
+</aside>
+
 <h1 id="mp-partner-api-service-products">Products</h1>
 
 <p>The Products API allows you to retrieve Products and update their inventory stocks.</p>
@@ -576,10 +672,9 @@ Look at the 'Authorization' header in the code samples.
 <blockquote>
 <p>Code samples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure <span class="se">\</span>
-     -X GET <span class="s2">"https://{HOSTNAME}/v1/products?page=1&amp;pageSize=50&amp;pickupLocations=23789,23790"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X GET <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/v1/products?page=1&amp;pageSize=50&amp;pickupLocationIds=23789,23790"</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
@@ -635,6 +730,9 @@ curl --include --insecure <span class="se">\</span>
       </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"111122223333"</span><span class="w">
       </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enabled"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chocolate Cereals"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">100150</span><span class="p">,</span><span class="w">
       </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -648,6 +746,9 @@ curl --include --insecure <span class="se">\</span>
       </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"444455556666"</span><span class="w">
       </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disabled"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apple Cereals"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">100151</span><span class="p">,</span><span class="w">
       </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -661,6 +762,9 @@ curl --include --insecure <span class="se">\</span>
       </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"444455556666"</span><span class="w">
       </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Discontinued"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fresh Orange Juice"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">120350</span><span class="p">,</span><span class="w">
       </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -691,6 +795,11 @@ curl --include --insecure <span class="se">\</span>
 <td><a href="#schemapage_product_">Page_Product_</a></td>
 </tr>
 </tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:product )
+</aside>
 <h2 id='get-one-product'>Get one Product</h2>
 <p>Get one Product <em>by RPC</em> (RPC stands for &#39;RedMart Product Code&#39;)</p>
 
@@ -699,10 +808,9 @@ curl --include --insecure <span class="se">\</span>
 <blockquote>
 <p>Code samples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure <span class="se">\</span>
-     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X GET <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/v1/products/{productId}"</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
@@ -740,6 +848,9 @@ curl --include --insecure <span class="se">\</span>
   </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"111122223333"</span><span class="w">
   </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enabled"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chocolate Cereals"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">100150</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -786,6 +897,11 @@ curl --include --insecure <span class="se">\</span>
 <td><a href="#schemaproblem">Problem</a></td>
 </tr>
 </tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:product )
+</aside>
 <h2 id='get-all-stock-lots'>Get all Stock Lots</h2>
 <p><a id="opIdgetProductsPickup-locationsStocks-productId-pickupLocationId"></a></p>
 
@@ -794,10 +910,9 @@ curl --include --insecure <span class="se">\</span>
 <blockquote>
 <p>Code samples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure <span class="se">\</span>
-     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stocks"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X GET <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots"</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
@@ -890,17 +1005,17 @@ curl --include --insecure <span class="se">\</span>
 </thead><tbody>
 <tr>
 <td></td>
-<td>[<a href="#schemastock">Stock</a>]</td>
+<td>[<a href="#schemastocklot">StockLot</a>]</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
 </tr>
 <tr>
-<td>availableForPickupFrom</td>
-<td>string(date-time)</td>
+<td>id</td>
+<td>string</td>
 <td>true</td>
 <td>none</td>
-<td>Indicates from which point in time the items are available for pickup (currently unused and hardcoded to epoch 0)</td>
+<td>Identifier of the requested Stock Lot. For now always hardcoded to &quot;0&quot; (please note the <code>String</code> type, do <strong>not</strong> always expect it to be a number !)</td>
 </tr>
 <tr>
 <td>quantityAtPickupLocation</td>
@@ -924,6 +1039,11 @@ curl --include --insecure <span class="se">\</span>
 <td>Number of items that can currently still be ordered by customers</td>
 </tr>
 </tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:stock-lot )
+</aside>
 <h2 id='get-one-stock-lot'>Get one Stock Lot</h2>
 <p><a id="opIdgetProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId"></a></p>
 
@@ -932,10 +1052,9 @@ curl --include --insecure <span class="se">\</span>
 <blockquote>
 <p>Code samples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure <span class="se">\</span>
-     -X GET <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X GET <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0"</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span>
 
@@ -1011,7 +1130,7 @@ curl --include --insecure <span class="se">\</span>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>OK</td>
-<td><a href="#schemastock">Stock</a></td>
+<td><a href="#schemastocklot">StockLot</a></td>
 </tr>
 <tr>
 <td>400</td>
@@ -1046,19 +1165,23 @@ curl --include --insecure <span class="se">\</span>
 <td>Identifier that describes the latest state of this resource</td>
 </tr>
 </tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: read:stock-lot )
+</aside>
 <h2 id='update-one-stock-lot'>Update one Stock Lot</h2>
 <p><a id="opIdpatchProductsPickup-locationsStocks1970-01-01T00:00:00Z-productId-pickupLocationId-If-Match-body"></a></p>
 
 <blockquote>
 <p>Code samples</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Test hostname : partner-api.alpha.redmart.com</span>
-<span class="c"># Prod hostname : partner-api.redmart.com</span>
-curl --include --insecure <span class="se">\</span>
-     --request PATCH <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+curl --include -X PATCH <span class="se">\</span>
+     <span class="s2">"https://{HOSTNAME}/v1/products/{productId}/pickup-locations/{pickupLocationId}/stock-lots/0"</span> <span class="se">\</span>
      -H <span class="s1">'Content-Type: application/merge-patch+json'</span> <span class="se">\</span>
      -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
-     -H <span class="s1">'If-Match: 10'</span> <span class="se">\</span>
+     -H <span class="s1">'If-Match: "10"'</span> <span class="se">\</span>
      -H <span class="s1">'Authorization: Bearer {access-token}'</span> <span class="se">\</span>
      --data <span class="s1">'{"quantityAtPickupLocation": 20}'</span>
 </code></pre><pre class="highlight scala tab-scala"><code><span class="c1">// TODO
@@ -1091,14 +1214,21 @@ curl --include --insecure <span class="se">\</span>
 <td>path</td>
 <td>string</td>
 <td>true</td>
-<td>none</td>
+<td>the RPC of the Product (so the RedMart-specific code, <em>not</em> the merchant-specific code)</td>
 </tr>
 <tr>
 <td>pickupLocationId</td>
 <td>path</td>
 <td>string</td>
 <td>true</td>
-<td>none</td>
+<td>The unique id of the pickup location where the product is stored</td>
+</tr>
+<tr>
+<td>id</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>Identifier of the requested Stock Lot. For now always hardcoded to &quot;0&quot; (please note the <code>String</code> type, do <strong>not</strong> always expect it to be a number !)</td>
 </tr>
 <tr>
 <td>If-Match</td>
@@ -1110,9 +1240,9 @@ curl --include --insecure <span class="se">\</span>
 <tr>
 <td>body</td>
 <td>body</td>
-<td><a href="#schemastockupdate">StockUpdate</a></td>
-<td>false</td>
-<td>StockUpdate</td>
+<td><a href="#schemastocklotupdate">StockLotUpdate</a></td>
+<td>true</td>
+<td>StockLotUpdate</td>
 </tr>
 </tbody></table>
 
@@ -1154,7 +1284,7 @@ curl --include --insecure <span class="se">\</span>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>OK</td>
-<td><a href="#schemastock">Stock</a></td>
+<td><a href="#schemastocklot">StockLot</a></td>
 </tr>
 <tr>
 <td>400</td>
@@ -1199,6 +1329,11 @@ curl --include --insecure <span class="se">\</span>
 <td>Identifier that describes the latest state of this resource</td>
 </tr>
 </tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+OAuth2 ( Scopes: write:stock-lot )
+</aside>
 <h1 id='schemas'><em>Schemas</em></h1>
 <p>All schemas referenced in the APIs documented above </p>
 
@@ -1278,15 +1413,15 @@ curl --include --insecure <span class="se">\</span>
 </tr>
 </tbody></table>
 
-<h2 id="tocSstockupdate">StockUpdate</h2>
+<h2 id="tocSstocklotupdate">StockLotUpdate</h2>
 
-<p><a id="schemastockupdate"></a></p>
+<p><a id="schemastocklotupdate"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
-<p><em>StockUpdate</em></p>
+<p><em>StockLotUpdate</em></p>
 <h3 id='properties-2'>Properties</h3>
 <table><thead>
 <tr>
@@ -1334,15 +1469,15 @@ curl --include --insecure <span class="se">\</span>
 </tr>
 </tbody></table>
 
-<h2 id="tocSpickuplocationref">PickupLocationRef</h2>
+<h2 id="tocSpickuplocationid">PickupLocationId</h2>
 
-<p><a id="schemapickuplocationref"></a></p>
+<p><a id="schemapickuplocationid"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
-<p><em>PickupLocationRef</em></p>
+<p><em>PickupLocationId</em></p>
 <h3 id='properties-4'>Properties</h3>
 <table><thead>
 <tr>
@@ -1369,17 +1504,14 @@ curl --include --insecure <span class="se">\</span>
   </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enabled"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"addressLine1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"addressLine2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"productCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
@@ -1405,6 +1537,13 @@ curl --include --insecure <span class="se">\</span>
 <td>none</td>
 </tr>
 <tr>
+<td>status</td>
+<td><a href="#schemastatus">Status</a></td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
 <td>title</td>
 <td>string</td>
 <td>true</td>
@@ -1420,7 +1559,7 @@ curl --include --insecure <span class="se">\</span>
 </tr>
 <tr>
 <td>pickupLocations</td>
-<td>[<a href="#schemapickuplocation">PickupLocation</a>]</td>
+<td>[<a href="#schemapickuplocationid">PickupLocationId</a>]</td>
 <td>true</td>
 <td>none</td>
 <td>none</td>
@@ -1434,9 +1573,57 @@ curl --include --insecure <span class="se">\</span>
 </tr>
 </tbody></table>
 
-<h2 id="tocSstock">Stock Lot</h2>
+<h2 id="tocSstatus">Status</h2>
 
-<p><a id="schemastock"></a></p>
+<p><a id="schemastatus"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disabled"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>Status</em></p>
+<h3 id='properties-6'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+<h4 id='enumerated-values'>Enumerated Values</h4>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>Disabled</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Discontinued</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Enabled</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSstocklot">Stock Lot</h2>
+
+<p><a id="schemastocklot"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quantityAtPickupLocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -1445,8 +1632,8 @@ curl --include --insecure <span class="se">\</span>
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
-<p><em>Stock</em></p>
-<h3 id='properties-6'>Properties</h3>
+<p><em>StockLot</em></p>
+<h3 id='properties-7'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -1508,7 +1695,7 @@ curl --include --insecure <span class="se">\</span>
 
 </span></code></pre>
 <p><em>Page«PickupLocation»</em></p>
-<h3 id='properties-7'>Properties</h3>
+<h3 id='properties-8'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -1559,6 +1746,9 @@ curl --include --insecure <span class="se">\</span>
       </span><span class="s2">"barcodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"string"</span><span class="w">
       </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enabled"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"rpc"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"pickupLocations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -1580,7 +1770,7 @@ curl --include --insecure <span class="se">\</span>
 
 </span></code></pre>
 <p><em>Page«Product»</em></p>
-<h3 id='properties-8'>Properties</h3>
+<h3 id='properties-9'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
