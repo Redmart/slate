@@ -33,7 +33,7 @@ You can now see the docs at http://localhost:4567
 
  - **npm** - run `sudo npm i -g npm` to update [npm](https://www.npmjs.com/get-npm) to the latest version
 
-### Getting Set Up
+### Initializing the documentation
 
 1. Install [Widdershins](https://github.com/Mermade/widdershins) (converts a swagger file into a [Slate](https://github.com/lord/slate/wiki/Slate-Related-Tools#converting-openapi--swagger-definitions-to-slate-compatible-markdown) markdown)
 ```shell
@@ -45,9 +45,12 @@ sudo npm install -g widdershins
 widdershins mp-partner-api-service-v1.json --language_tabs "shell:Shell" --language_tabs "java:Java" -o mp-partner-api-slate.md
 ```
 4. Use the generated `mp-partner-api-slate.md` _as a scaffolding only_ to update this repo's `source/index.html.md`. For now, the Swagger does not translate directly to the markdown, which needs a fair amount of manual editing. See [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax) for more syntax details.
-5. As you edit, you can view your changes locally in a browser, see [previous section](#viewing-the-documentation-locally)
-6. Once your changes are finished, create a PR (or push directly to master)
-7. run this repo's deploy script to make your changes visible at [redmart.github.io/partner-api-doc](https://redmart.github.io/partner-api-doc)
+
+### Updating the documentation
+
+1. Directly edit `source/index.html.md`. ou can view your changes locally in a browser, see [previous section](#viewing-the-documentation-locally)
+2. Once your changes are finished, create a PR (or push directly to master)
+3. run this repo's `deploy.sh` script to make your changes visible at [redmart.github.io/partner-api-doc](https://redmart.github.io/partner-api-doc)
 ```shell
 cd partner-api-doc
 ./deploy.sh
