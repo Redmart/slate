@@ -242,6 +242,9 @@
               </ul>
           </li>
           <li>
+            <a href="#rate-limiting" class="toc-h1 toc-link" data-title="rate-limiting">Rate Limiting</a>
+          </li>
+          <li>
             <a href="#pickup-locations" class="toc-h1 toc-link" data-title="pickup-locations">Pickup Locations</a>
               <ul class="toc-list-h2">
                   <li>
@@ -349,11 +352,15 @@
 </tr>
 <tr>
 <td>2018-08-02</td>
-<td>Add OAuth 2 <a href="#scopes">scopes</a> to all endpoints to manage access rights of applications</td>
+<td>Adds OAuth 2 <a href="#scopes">scopes</a> to all endpoints to manage access rights of applications</td>
 </tr>
 <tr>
 <td></td>
-<td>List all available <a href="#environments">Environments</a></td>
+<td>Lists all available <a href="#environments">Environments</a></td>
+</tr>
+<tr>
+<td>2018-08-28</td>
+<td>Adds <a href="#rate-limiting">Rate Limiting</a> section</td>
 </tr>
 </tbody></table>
 <h2 id='environments'>Environments</h2>
@@ -478,6 +485,67 @@ curl --include -X POST <span class="se">\</span>
 <td>Grants access to update stock lots of a product</td>
 </tr>
 </tbody></table>
+<h1 id='rate-limiting'>Rate Limiting</h1>
+<p>Each endpoint of this API limits how many times you can call it per second. Below is a summary of all existing endpoints and their respective rate limit.</p>
+
+<table><thead>
+<tr>
+<th>Endpoint</th>
+<th>Max number of calls per second</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="#get-all-pickup-locations">Get all Pickup Locations</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td><a href="#get-one-pickup-location">Get one Pickup Location</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td><a href="#get-all-products">Get all Products</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td><a href="#get-one-product">Get one Product</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td><a href="#get-all-stock-lots">Get all Stock Lots</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td><a href="#get-one-stock-lot">Get one Stock Lot</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td><a href="#update-one-stock-lot">Update one Stock Lot</a></td>
+<td>10</td>
+</tr>
+</tbody></table>
+
+<p>Each (successful) response from the above endpoints contains 2 headers you can monitor to help control your rate</p>
+
+<table><thead>
+<tr>
+<th>http Header</th>
+<th>Example Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-RateLimit-Limit-second</td>
+<td>10</td>
+<td>max number of calls per second allowed for this particular endpoint. Always the same value.</td>
+</tr>
+<tr>
+<td>X-RateLimit-Remaining-second</td>
+<td>9</td>
+<td>max <em>remaining</em> number of calls allowed in the current second for this particular endpoint.</td>
+</tr>
+</tbody></table>
+
+<p>If you exceed the rate limit of a particular endpoint, it&#39;ll keep responding http code <a href="https://tools.ietf.org/html/rfc6585#section-4">429</a> until the current second is passed.</p>
 <h1 id='pickup-locations'>Pickup Locations</h1>
 <p>A Product can be picked from within one Pickup Location.
 A Marketplace Seller can have several Pickup Locations.</p>
