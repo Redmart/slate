@@ -48,7 +48,7 @@ widdershins mp-partner-api-service-v1.json --language_tabs "shell:Shell" --langu
 
 ### Updating the documentation
 
-1. Directly edit `source/index.html.md`. ou can view your changes locally in a browser, see [previous section](#viewing-the-documentation-locally)
+1. Directly edit `source/index.html.md`. You can view your changes locally in a browser, see [previous section](#viewing-the-documentation-locally)
 2. Once your changes are finished, create a PR (or push directly to master)
 3. run this repo's `deploy.sh` script to make your changes visible at [redmart.github.io/partner-api-doc](https://redmart.github.io/partner-api-doc)
 ```shell
