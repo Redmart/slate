@@ -32,8 +32,9 @@ We will list any changes to the current version of the API here.
 | 2018-07-13  | Renames _Stocks_ as **Stock Lots** |
 |             | Identifies each Stock Lot by their **new `id` field** (rather than the previously used `availableForPickupFrom`) |
 |             | Adds the error response code **409 Conflict** in [Update one Stock Lot](#update-one-stock-lot) |
-| 2018-08-02  | Add OAuth 2 [scopes](#scopes) to all endpoints to manage access rights of applications |
-|             | List all available [Environments](#environments) |
+| 2018-08-02  | Adds OAuth 2 [scopes](#scopes) to all endpoints to manage access rights of applications |
+|             | Lists all available [Environments](#environments) |
+| 2018-08-28  | Adds [Rate Limiting](#rate-limiting) section |
 
 ## Environments
 
@@ -113,6 +114,29 @@ To call any endpoint of this API, your access token needs to have access to the 
 | read:product         | Grants access to view details of a product |
 | read:stock-lot       | Grants access to view stock lots of a product |
 | write:stock-lot      | Grants access to update stock lots of a product |
+
+# Rate Limiting
+
+Each endpoint of this API limits how many times you can call it per second. Below is a summary of all existing endpoints and their respective rate limit.
+
+| Endpoint                                              | Max number of calls per second |
+| ----------------------------------------------------- | ------------------------------ |
+| [Get all Pickup Locations](#get-all-pickup-locations) | 10                             |
+| [Get one Pickup Location](#get-one-pickup-location)   | 10                             |
+| [Get all Products](#get-all-products)                 | 10                             |
+| [Get one Product](#get-one-product)                   | 10                             |
+| [Get all Stock Lots](#get-all-stock-lots)             | 10                             |
+| [Get one Stock Lot](#get-one-stock-lot)               | 10                             |
+| [Update one Stock Lot](#update-one-stock-lot)         | 10                             |
+
+Each (successful) response from the above endpoints contains 2 headers you can monitor to help control your rate
+
+| http Header                  | Example Value | Description                                                                                     |
+| ---------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
+| X-RateLimit-Limit-second     | 10            | max number of calls per second allowed for this particular endpoint. Always the same value.     |
+| X-RateLimit-Remaining-second | 9             | max _remaining_ number of calls allowed in the current second for this particular endpoint.     |
+
+If you exceed the rate limit of a particular endpoint, it'll keep responding http code [429](https://tools.ietf.org/html/rfc6585#section-4) until the current second is passed.
 
 # Pickup Locations
 
