@@ -39,7 +39,7 @@ You can now see the docs at http://localhost:4567
 ```shell
 sudo npm install -g widdershins
 ``` 
-2. Get the `mp-partner-api-service-vX.json` Swagger file from [Confluence](https://redmart.atlassian.net/wiki/spaces/marketplace/pages/407470169/2018Q1+-+Stock+Management) (last [known version](https://gist.githubusercontent.com/JanGe/43b539746d1ee57fe4e92c0c358b37fa/raw/d92c053f6304e85ef63e6b950e3e46df7c576b33/mp-partner-api-service-v1.json) as of July 2018)
+2. Get the latest Swagger file from `mp-partner-api-service` (see README in the service repository).
 3. Generate a Slate markdown out of the Swagger file
 ```shell
 widdershins mp-partner-api-service-v1.json --language_tabs "shell:Shell" --language_tabs "java:Java" -o mp-partner-api-slate.md
