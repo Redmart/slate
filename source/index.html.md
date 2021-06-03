@@ -38,14 +38,10 @@ We will list any changes to the current version of the API here.
 
 ## Environments
 
-We currently provide the Partner API in two environments, **Sandbox** and **Production**.
-
- - **Sandbox** should be used for development and testing of your integration with our systems. Changes done here will not have an impact on what customers can order via RedMart. This environment might not at all times be stable and working.
- - **Production** should only be used once you are done with development and have tested your integration with our systems extensively. All changes done here will have a direct impact on what is available for customers to order via RedMart.
+We currently provide the Partner API in one environment, **Production**.
 
 | Environment | Hostname |
 | ----------- | -------- |
-| Sandbox     | partners-api.alpha.redmart.com |
 | Production  | partners-api.redmart.com |
 
 # Registration
